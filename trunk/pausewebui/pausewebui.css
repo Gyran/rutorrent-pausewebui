@@ -1,9 +1,9 @@
 div#webuiUpdateToggle.pause {
-	background: transparent url(../../images/toolbar.png) no-repeat -120px 50%;
+	background: transparent url(./images/pause.png) no-repeat;
 }
 
 div#webuiUpdateToggle.resume {
-	background: transparent url(../../images/toolbar.png) no-repeat -96px 50%;
+	background: transparent url(./images/resume.png) no-repeat;
 }
 
 div#webuiRefresh {
