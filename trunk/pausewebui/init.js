@@ -5,8 +5,9 @@ paused = false;
 
 window.onfocus = function()
 {
-	if(!paused)
+	if(!paused){
 		theWebUI.update();
+	}
 }
 
 window.onblur = function()
@@ -54,7 +55,7 @@ theWebUI.forceUpdate = function(){
 plugin.onLangLoaded = function()
 {
 	this.addButtonToToolbar("webuiUpdateToggle", theUILang.pausewebuiPause, "theWebUI.togglePause()", "help");
-	this.addButtonToToolbar("webuiRefresh", theUILang.pausewebuiRefresh, "theWebUI.update()", "help");
+	this.addButtonToToolbar("webuiRefresh", theUILang.pausewebuiRefresh, "theWebUI.forceUpdate()", "help");
 	$("#webuiUpdateToggle").addClass("pause");
 	this.addSeparatorToToolbar("help");
 }
