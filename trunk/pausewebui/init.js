@@ -1,29 +1,47 @@
 plugin.loadMainCSS();
 plugin.loadLang();
 
+debug = false;
+
 paused = false;
+
 
 window.onfocus = function()
 {
+	if(debug)
+		log("Pausewebui: focus");
 	if(!paused){
+		if(debug)
+			log("Pausewebui: not paused on focus");
 		theWebUI.update();
 	}
 }
 
 window.onblur = function()
 {
+	if(debug)
+		log("Pausewebui: blur");
 	stop();	
 }
 
 function stop(){
+	if(debug)
+		log("Pausewebui: stopping");
 	theWebUI.timer.stop();
-	if(theWebUI.updTimer)
+	if(theWebUI.updTimer){
+		if(debug)
+			log("Pausewebui: clearing timer");
 		window.clearTimeout(theWebUI.updTimer);	
+	}
 }
 
 theWebUI.togglePause = function(){
+	if(debug)
+		log("Pausewebui: toggeling");
 	if(paused)
 	{
+		if(debug)
+			log("Pausewebui: paused -> resuming");
 		$("#webuiUpdateToggle").removeClass("resume");
 		$("#webuiUpdateToggle").addClass("pause");
 		$("#webuiUpdateToggle").attr("title", theUILang.pausewebuiPause);
@@ -33,6 +51,8 @@ theWebUI.togglePause = function(){
 	}
 	else
 	{
+		if(debug)
+			log("Pausewebui: !paused -> pausing");
 		$("#webuiUpdateToggle").removeClass("pause");
 		$("#webuiUpdateToggle").addClass("resume");
 		$("#webuiUpdateToggle").attr("title", theUILang.pausewebuiResume);
@@ -44,11 +64,24 @@ theWebUI.togglePause = function(){
 }
 
 theWebUI.forceUpdate = function(){
-	if(theWebUI.updTimer)
-		window.clearTimeout(theWebUI.updTimer);
+	if(debug)
+		log("Pausewebui: forcing");
+	stop();
 	theWebUI.update();
 	if(paused){
-		stop();	
+		stop();
+	}
+}
+
+originalSetInterval = theWebUI.setInterval
+
+theWebUI.setInterval = function(force){
+	if(debug)
+		log("Pausewebui: trying to set interval");
+	if(!paused){
+		if(debug)
+			log("Pausewebui: setting interval");
+		originalSetInterval.call(this, force);
 	}
 }
 
