@@ -1,5 +1,5 @@
 plugin.loadMainCSS();
-plugin.loadLang();
+plugin.loadLang(true);
 
 debug = false;
 
